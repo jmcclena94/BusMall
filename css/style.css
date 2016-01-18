@@ -1,0 +1,19 @@
+.imageList {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.imageItem {
+  height: 350px;
+  width: 350px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.imageItem img {
+  height: auto;
+  width: 50%;
+}
