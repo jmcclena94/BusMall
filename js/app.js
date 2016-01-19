@@ -22,22 +22,61 @@ for (var i = 0;i < imagePaths.length; i += 1) {
 }
 
 var randomImageIndex = [];
-var randCounter = 0;
-while (randCounter < 3) {
-  var randIndex = Math.floor(Math.random() * (imagePaths.length));
-  var isUnique = randomImageIndex.indexOf(randIndex);
-  if (isUnique === -1) {
-    randomImageIndex.push(randIndex);
-    randCounter += 1;
+
+function displayImage() {
+  var randCounter = 0;
+  while (randCounter < 3) {
+    var randIndex = Math.floor(Math.random() * (imagePaths.length));
+    var isUnique = randomImageIndex.indexOf(randIndex);
+    if (isUnique === -1) {
+      randomImageIndex.push(randIndex);
+      randCounter += 1;
+    }
+  }
+
+  imageOneId.src = allImages[randomImageIndex[0]].imagePath;
+  imageTwoId.src = allImages[randomImageIndex[1]].imagePath;
+  imageThreeId.src = allImages[randomImageIndex[2]].imagePath;
+
+}
+
+var imageOneId = document.getElementById('imageOne');
+var imageTwoId = document.getElementById('imageTwo');
+var imageThreeId = document.getElementById('imageThree');
+
+imageOneId.addEventListener('click',function() {
+  clickFunction(randomImageIndex[0],randomImageIndex[1],randomImageIndex[2]);
+});
+imageTwoId.addEventListener('click',function() {
+  clickFunction(randomImageIndex[1],randomImageIndex[0],randomImageIndex[2]);
+});
+imageThreeId.addEventListener('click',function() {
+  clickFunction(randomImageIndex[2],randomImageIndex[0],randomImageIndex[1]);
+});
+
+function clickFunction(index1,index2,index3) {
+  if (totalClicks < 15) {
+    allImages[index1].timesClicked += 1;
+    allImages[index1].timesAppeared += 1;
+    allImages[index2].timesAppeared += 1;
+    allImages[index3].timesAppeared += 1;
+
+    totalClicks += 1;
+
+    console.log('total clicks = ' + totalClicks);
+
+    randomImageIndex = [];
+
+    displayImage();
   }
 }
 
-document.getElementById('imageOne').src = allImages[randomImageIndex[0]].imagePath;
-document.getElementById('imageTwo').src = allImages[randomImageIndex[1]].imagePath;
-document.getElementById('imageThree').src = allImages[randomImageIndex[2]].imagePath;
+if (totalClicks === 0) {
+  displayImage();
+}
 
-// var imageOneId = document.getElementById('imageOne');
-// var imageTwoId = document.getElementById('imageTwo');
-// var imageThreeId = document.getElementById('imageThree');
+var dataDisplayId = document.getElementById('dataContainer');
 
-// imageOneId.src = allImages[randomImageIndex[1]].imagePath;
+if (totalClicks === 15) {
+
+}
