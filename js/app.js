@@ -52,6 +52,10 @@ imageTwoId.addEventListener('click',function() {
 imageThreeId.addEventListener('click',function() {
   clickFunction(randomImageIndex[2],randomImageIndex[0],randomImageIndex[1]);
 });
+displayImage();
+
+var namesList = [];
+var timesClickedList = [];
 
 function clickFunction(index1,index2,index3) {
   if (totalClicks < 15) {
@@ -62,20 +66,12 @@ function clickFunction(index1,index2,index3) {
 
     totalClicks += 1;
 
-    console.log('total clicks = ' + totalClicks);
-
     randomImageIndex = [];
 
     displayImage();
+  } else {
+    namesList = _.pluck(allImages,'imageName');
+    timesClickedList = _.pluck(allImages,'timesClicked');
+    timesAppearedList = _.pluck(allImages,'timesAppeared');
   }
 }
-
-if (totalClicks === 0) {
-  displayImage();
-}
-
-// var dataDisplayId = document.getElementById('dataContainer');
-//
-// if (totalClicks === 15) {
-//   dataDisplayId.textContent =
-// }
