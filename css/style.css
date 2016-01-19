@@ -27,3 +27,21 @@ header {
   width: auto;
   border: 3px solid black;
 }
+
+.chartButton {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dataContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  /*flex-direction: column;*/
+}
+
+.chartFlexBox {
+  height: 60vh;
+  width: auto;
+}
