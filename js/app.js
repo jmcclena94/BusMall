@@ -75,8 +75,8 @@ if (totalClicks === 0) {
   displayImage();
 }
 
-var dataDisplayId = document.getElementById('dataContainer');
-
-if (totalClicks === 15) {
-
-}
+// var dataDisplayId = document.getElementById('dataContainer');
+//
+// if (totalClicks === 15) {
+//   dataDisplayId.textContent =
+// }
