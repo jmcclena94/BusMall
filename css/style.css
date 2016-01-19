@@ -1,3 +1,7 @@
+body {
+  background-color: #A8AFB3;
+}
+
 header {
   text-align: center;
 }
@@ -21,6 +25,7 @@ header {
 .imageItem img {
   height: 50%;
   width: auto;
+  border: 3px solid black;
   /*height: auto;
   width: 50%;*/
 }

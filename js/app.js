@@ -15,7 +15,6 @@ function imageData(imageName,imagePath) {
 }
 
 var allImages = [];
-
 for (var i = 0;i < imagePaths.length; i += 1) {
   imageToken = imagePaths[i].substr(0,imagePaths[i].length - 4);
   var imageToken = new imageData(imageToken,imagePaths[i]);
@@ -75,8 +74,8 @@ if (totalClicks === 0) {
   displayImage();
 }
 
-var dataDisplayId = document.getElementById('dataContainer');
-
-if (totalClicks === 15) {
-
-}
+// var dataDisplayId = document.getElementById('dataContainer');
+//
+// if (totalClicks === 15) {
+//   dataDisplayId.textContent =
+// }
