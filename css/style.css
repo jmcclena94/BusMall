@@ -13,6 +13,7 @@ header {
   flex-wrap: wrap;
   align-items: center;
   margin-top: 100px;
+  height: 300px;
 }
 
 .imageItem {
@@ -40,7 +41,7 @@ header {
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 5px;
   height: 75vh;
 }
 
