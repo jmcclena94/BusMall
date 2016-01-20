@@ -26,6 +26,23 @@ header {
   height: 50%;
   width: auto;
   border: 3px solid black;
-  /*height: auto;
-  width: 50%;*/
+}
+
+.chartButton {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dataContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 10px;
+  height: 75vh;
+}
+
+.chartFlexBox {
+  height: 60vh;
+  width: auto;
 }

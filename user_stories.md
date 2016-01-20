@@ -2,6 +2,8 @@ These are user stories for the BusMall problem.
 
 As a user, I want to:
 -Have clear instructions as to what actions to take and where to click on the website.
+-Be able to understand the results of my 15 clicks.
+-Get a clear response after I have clicked on how I can get the results I require.
 
 
 As a developer I want to:
@@ -12,3 +14,4 @@ As a developer I want to:
 
 As a business owner I want to:
 -Get useful marketing information regarding the images I supply to my developer.
+-Display the data in a meaningful way that can be used by a marketing team to find find out which products are best.

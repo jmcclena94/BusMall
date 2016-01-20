@@ -3,13 +3,17 @@
 <head>
   <title>BusMall Marketing Research</title>
   <link href="css/style.css" type="text/css" rel="stylesheet"/>
-  <!-- <script src="~/node_modules/chart.js/Chart.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="js/underscore.js"></script>
+  <!-- <script src="js/Chart.js"></script> -->
+  <script src="js/highcharts.js"></script>
+ <script src="js/exporting.js"></script>
 </head>
 <body>
   <header>
     <h1>BusMall Market Research Test</h1>
     <p>
-      This is a market research test.  Please click the image below you find most appealing.
+      This is a market research test.  Please click the image below you find most appealing, then click the "Get Results" button after you have selected 15 times.
     </p>
   </header>
   <ul class="imageList">
@@ -17,8 +21,10 @@
     <li class="imageItem"><img id="imageTwo"></li>
     <li class="imageItem"><img id="imageThree"></li>
   </ul>
-  <script src="js/app.js"></script>
+  <form id="chartButton" class="chartButton"></form>
   <div class="dataContainer" id="dataContainer">
+    <!-- <canvas id="dataChart" class="chartFlexBox"></canvas> -->
   </div>
+  <script src="js/app.js"></script>
 </body>
 </html>
