@@ -100,7 +100,7 @@ function renderCharts (allImages) {
         text: 'Click Data for Each Image'
       },
       subtitle: {
-        text: 'Results from Market Analysis Test'
+        text: 'Sorted by Percentage Clicked'
       },
       xAxis: [{
         categories: namesList,
@@ -108,7 +108,7 @@ function renderCharts (allImages) {
       }],
       yAxis: [{
         labels: {
-          format: '{value} Percent',
+          format: '{value} %',
           style: {
             color: Highcharts.getOptions().colors[2]
           }
@@ -123,13 +123,13 @@ function renderCharts (allImages) {
       }, {
         gridLineWidth: 0,
         title: {
-          text: 'Clicks',
+          text: 'Clicks/Appearances',
           style: {
             color: Highcharts.getOptions().colors[0]
           }
         },
         labels: {
-          format: '{value} Clicks',
+          format: '{value} Times',
           style: {
             color: Highcharts.getOptions().colors[0]
           }
@@ -137,7 +137,7 @@ function renderCharts (allImages) {
       }, {
         gridLineWidth: 0,
         title: {
-          text: 'Seen',
+          text: ' ',
           style: {
             color: Highcharts.getOptions().colors[1]
           }
@@ -173,7 +173,7 @@ function renderCharts (allImages) {
       }, {
         name: 'Times Appeared',
         type: 'spline',
-        yAxis: 2,
+        yAxis: 1,
         data: timesAppearedList,
         marker: {
           enabled: false
