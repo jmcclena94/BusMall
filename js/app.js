@@ -83,13 +83,10 @@ function renderCharts (allImages) {
     allImages[i].percentage = parseFloat(((allImages[i].timesClicked/allImages[i].timesAppeared) * 100).toFixed(1));
   }
   var allImagesSorted = _.sortBy(allImages,'percentage');
-  console.table(allImagesSorted);
   namesList = _.pluck(allImagesSorted,'imageName');
   timesClickedList = _.pluck(allImagesSorted,'timesClicked');
   timesAppearedList = _.pluck(allImagesSorted,'timesAppeared');
   percentAppearedList = _.pluck(allImagesSorted,'percentage');
-
-
 
   $(function () {
     $('#dataContainer').highcharts({
@@ -192,79 +189,4 @@ function renderCharts (allImages) {
       }]
     });
   });
-
-//   var ctx = document.getElementById('dataChart').getContext('2d');
-//   Chart.defaults.global = {
-//     animation: true,
-//     animationSteps: 60,
-//     animationEasing: "easeOutQuart",
-//     showScale: true,
-//     scaleOverride: false,
-//     scaleSteps: null,
-//     scaleStepWidth: null,
-//     scaleStartValue: null,
-//     scaleLineColor: "rgba(0,0,0,.1)",
-//     scaleLineWidth: 1,
-//     scaleShowLabels: true,
-//     scaleLabel: "<%=value%>",
-//     scaleIntegersOnly: true,
-//     scaleBeginAtZero: false,
-//     scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-//     scaleFontSize: 12,
-//     scaleFontStyle: "normal",
-//     scaleFontColor: "#666",
-//     responsive: false,
-//     maintainAspectRatio: true,
-//     showTooltips: true,
-//     customTooltips: false,
-//     tooltipEvents: ["mousemove", "touchstart", "touchmove"],
-//     tooltipFillColor: "rgba(0,0,0,0.8)",
-//     tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-//     tooltipFontSize: 14,
-//     tooltipFontStyle: "normal",
-//     tooltipFontColor: "#fff",
-//     tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-//     tooltipTitleFontSize: 14,
-//     tooltipTitleFontStyle: "bold",
-//     tooltipTitleFontColor: "#fff",
-//     tooltipYPadding: 6,
-//     tooltipXPadding: 6,
-//     tooltipCaretSize: 8,
-//     tooltipCornerRadius: 6,
-//     tooltipXOffset: 10,
-//     tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
-//     multiTooltipTemplate: "<%= value %>",
-//     onAnimationProgress: function(){},
-//     onAnimationComplete: function(){}
-// };
-//   var data = {
-//       labels: namesList,
-//       datasets: [
-//         {
-//           label: "First Dataset",
-//           fillColor: "rgba(0, 74, 243,0.5)",
-//           strokeColor: "rgba(0, 74, 243,0.8)",
-//           highlightFill: "rgba(0, 74, 243,0.75)",
-//           highlightStroke: "rgba(0, 74, 243,1)",
-//           data: timesClickedList
-//         },
-//         {
-//           label: "Second Dataset",
-//           fillColor: "rgba(0, 248, 0,0.5)",
-//           strokeColor: "rgba(0, 248, 0,0.8)",
-//           highlightFill: "rgba(0, 248, 0,0.75)",
-//           highlightStroke: "rgba(0, 248, 0,1)",
-//           data: timesAppearedList
-//         },
-//         {
-//           label: "Third Dataset",
-//           fillColor: "rgba(249,0,0,0.5)",
-//           strokeColor: "rgba(249,0,0,0.8)",
-//           highlightFill: "rgba(249,0,0,0.75)",
-//           highlightStroke: "rgba(249,0,0,1)",
-//           data: percentAppearedList
-//         }
-//       ]
-//   };
-//   var newChart = new Chart(ctx).Bar(data);
 }
