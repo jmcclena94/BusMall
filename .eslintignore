@@ -1,0 +1,16 @@
+README.md
+user_stories.md
+**.html
+**.css
+.gitignore
+css/**
+img/**
+js/Chart.js
+js/appTesting.js
+js/exporting.js
+js/highcharts.js
+js/jquery.js
+js/underscore.js
+.DS_Store
+.eslintrc
+.eslintignore
