@@ -12,6 +12,7 @@ function imageData(imageName,imagePath) {
   this.imageName = imageName;
   this.timesClicked = 0;
   this.timesAppeared = 0;
+  this.percentage = 0;
   allImages.push(this);
 }
 
@@ -78,87 +79,192 @@ function clickFunction(index1,index2,index3) {
 
 function renderCharts (allImages) {
   event.preventDefault();
-  var allImagesSorted = _.sortBy(allImages,'timesClicked');
+  for (var i = 0; i < allImages.length; i += 1) {
+    allImages[i].percentage = parseFloat(((allImages[i].timesClicked/allImages[i].timesAppeared) * 100).toFixed(1));
+  }
+  var allImagesSorted = _.sortBy(allImages,'percentage');
+  console.table(allImagesSorted);
   namesList = _.pluck(allImagesSorted,'imageName');
   timesClickedList = _.pluck(allImagesSorted,'timesClicked');
   timesAppearedList = _.pluck(allImagesSorted,'timesAppeared');
+  percentAppearedList = _.pluck(allImagesSorted,'percentage');
 
-  for (var i = 0; i < allImages.length; i += 1) {
-    percentAppearedList[i] = ((timesClickedList[i]/timesAppearedList[i]) * 100).toFixed(1);
-  }
 
-  var ctx = document.getElementById('dataChart').getContext('2d');
-  Chart.defaults.global = {
-    animation: true,
-    animationSteps: 60,
-    animationEasing: "easeOutQuart",
-    showScale: true,
-    scaleOverride: false,
-    scaleSteps: null,
-    scaleStepWidth: null,
-    scaleStartValue: null,
-    scaleLineColor: "rgba(0,0,0,.1)",
-    scaleLineWidth: 1,
-    scaleShowLabels: true,
-    scaleLabel: "<%=value%>",
-    scaleIntegersOnly: true,
-    scaleBeginAtZero: false,
-    scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-    scaleFontSize: 12,
-    scaleFontStyle: "normal",
-    scaleFontColor: "#666",
-    responsive: false,
-    maintainAspectRatio: true,
-    showTooltips: true,
-    customTooltips: false,
-    tooltipEvents: ["mousemove", "touchstart", "touchmove"],
-    tooltipFillColor: "rgba(0,0,0,0.8)",
-    tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-    tooltipFontSize: 14,
-    tooltipFontStyle: "normal",
-    tooltipFontColor: "#fff",
-    tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-    tooltipTitleFontSize: 14,
-    tooltipTitleFontStyle: "bold",
-    tooltipTitleFontColor: "#fff",
-    tooltipYPadding: 6,
-    tooltipXPadding: 6,
-    tooltipCaretSize: 8,
-    tooltipCornerRadius: 6,
-    tooltipXOffset: 10,
-    tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
-    multiTooltipTemplate: "<%= value %>",
-    onAnimationProgress: function(){},
-    onAnimationComplete: function(){}
-};
-  var data = {
-      labels: namesList,
-      datasets: [
-        {
-          label: "First Dataset",
-          fillColor: "rgba(0, 74, 243,0.5)",
-          strokeColor: "rgba(0, 74, 243,0.8)",
-          highlightFill: "rgba(0, 74, 243,0.75)",
-          highlightStroke: "rgba(0, 74, 243,1)",
-          data: timesClickedList
+
+  $(function () {
+    $('#dataContainer').highcharts({
+      chart: {
+        zoomType: 'xy'
+      },
+      title: {
+        text: 'Click Data for Each Image'
+      },
+      subtitle: {
+        text: 'Results from Market Analysis Test'
+      },
+      xAxis: [{
+        categories: namesList,
+        crosshair: true
+      }],
+      yAxis: [{
+        labels: {
+          format: '{value} Percent',
+          style: {
+            color: Highcharts.getOptions().colors[2]
+          }
         },
-        {
-          label: "Second Dataset",
-          fillColor: "rgba(0, 248, 0,0.5)",
-          strokeColor: "rgba(0, 248, 0,0.8)",
-          highlightFill: "rgba(0, 248, 0,0.75)",
-          highlightStroke: "rgba(0, 248, 0,1)",
-          data: timesAppearedList
+        title: {
+          text: 'Percent',
+          style: {
+            color: Highcharts.getOptions().colors[2]
+          }
         },
-        {
-          label: "Third Dataset",
-          fillColor: "rgba(249,0,0,0.5)",
-          strokeColor: "rgba(249,0,0,0.8)",
-          highlightFill: "rgba(249,0,0,0.75)",
-          highlightStroke: "rgba(249,0,0,1)",
-          data: percentAppearedList
+        opposite: true
+      }, {
+        gridLineWidth: 0,
+        title: {
+          text: 'Clicks',
+          style: {
+            color: Highcharts.getOptions().colors[0]
+          }
+        },
+        labels: {
+          format: '{value} Clicks',
+          style: {
+            color: Highcharts.getOptions().colors[0]
+          }
         }
-      ]
-  };
-  var newChart = new Chart(ctx).Bar(data);
+      }, {
+        gridLineWidth: 0,
+        title: {
+          text: 'Seen',
+          style: {
+            color: Highcharts.getOptions().colors[1]
+          }
+        },
+        labels: {
+          format: '{value} Times',
+          style: {
+            color: Highcharts.getOptions().colors[1]
+          }
+        },
+        opposite: true
+      }],
+      tooltip: {
+        shared: true
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'left',
+        x: 80,
+        verticalAlign: 'top',
+        y: 55,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+      },
+      series: [{
+        name:'Times Clicked',
+        type: 'column',
+        yAxis: 1,
+        data: timesClickedList,
+        tooltip: {
+          valueSuffix: ' Clicks'
+        }
+      }, {
+        name: 'Times Appeared',
+        type: 'spline',
+        yAxis: 2,
+        data: timesAppearedList,
+        marker: {
+          enabled: false
+        },
+        dashStyle: 'shortdot',
+        tooltip: {
+          valueSuffix: ' Appearances'
+        }
+      }, {
+        name: 'Perentage',
+        type: 'spline',
+        data: percentAppearedList,
+        tooltip: {
+          valueSuffix: ' Percent'
+        }
+      }]
+    });
+  });
+
+//   var ctx = document.getElementById('dataChart').getContext('2d');
+//   Chart.defaults.global = {
+//     animation: true,
+//     animationSteps: 60,
+//     animationEasing: "easeOutQuart",
+//     showScale: true,
+//     scaleOverride: false,
+//     scaleSteps: null,
+//     scaleStepWidth: null,
+//     scaleStartValue: null,
+//     scaleLineColor: "rgba(0,0,0,.1)",
+//     scaleLineWidth: 1,
+//     scaleShowLabels: true,
+//     scaleLabel: "<%=value%>",
+//     scaleIntegersOnly: true,
+//     scaleBeginAtZero: false,
+//     scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+//     scaleFontSize: 12,
+//     scaleFontStyle: "normal",
+//     scaleFontColor: "#666",
+//     responsive: false,
+//     maintainAspectRatio: true,
+//     showTooltips: true,
+//     customTooltips: false,
+//     tooltipEvents: ["mousemove", "touchstart", "touchmove"],
+//     tooltipFillColor: "rgba(0,0,0,0.8)",
+//     tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+//     tooltipFontSize: 14,
+//     tooltipFontStyle: "normal",
+//     tooltipFontColor: "#fff",
+//     tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+//     tooltipTitleFontSize: 14,
+//     tooltipTitleFontStyle: "bold",
+//     tooltipTitleFontColor: "#fff",
+//     tooltipYPadding: 6,
+//     tooltipXPadding: 6,
+//     tooltipCaretSize: 8,
+//     tooltipCornerRadius: 6,
+//     tooltipXOffset: 10,
+//     tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+//     multiTooltipTemplate: "<%= value %>",
+//     onAnimationProgress: function(){},
+//     onAnimationComplete: function(){}
+// };
+//   var data = {
+//       labels: namesList,
+//       datasets: [
+//         {
+//           label: "First Dataset",
+//           fillColor: "rgba(0, 74, 243,0.5)",
+//           strokeColor: "rgba(0, 74, 243,0.8)",
+//           highlightFill: "rgba(0, 74, 243,0.75)",
+//           highlightStroke: "rgba(0, 74, 243,1)",
+//           data: timesClickedList
+//         },
+//         {
+//           label: "Second Dataset",
+//           fillColor: "rgba(0, 248, 0,0.5)",
+//           strokeColor: "rgba(0, 248, 0,0.8)",
+//           highlightFill: "rgba(0, 248, 0,0.75)",
+//           highlightStroke: "rgba(0, 248, 0,1)",
+//           data: timesAppearedList
+//         },
+//         {
+//           label: "Third Dataset",
+//           fillColor: "rgba(249,0,0,0.5)",
+//           strokeColor: "rgba(249,0,0,0.8)",
+//           highlightFill: "rgba(249,0,0,0.75)",
+//           highlightStroke: "rgba(249,0,0,1)",
+//           data: percentAppearedList
+//         }
+//       ]
+//   };
+//   var newChart = new Chart(ctx).Bar(data);
 }
