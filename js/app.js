@@ -1,7 +1,4 @@
 'use strict';
-/* jshint -W040 */
-/* jshint -W097 */
-/* jshint -W117 */
 var totalClicks = 0;
 var imageNameData = {
   imagePaths: ['bag.jpg', 'banana.jpg', 'boots.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'pen.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'unicorn.jpg', 'usb.gif', 'water_can.jpg', 'wine_glass.jpg'],
@@ -102,7 +99,7 @@ function renderCharts (allImages) {
             }
           },
           title: {
-            text: 'Percent',
+            text: 'Percent Clicked',
             style: {
               color: Highcharts.getOptions().colors[2]
             }
@@ -171,7 +168,7 @@ function renderCharts (allImages) {
             valueSuffix: ' Appearances'
           }
         }, {
-          name: 'Perentage',
+          name: 'Percent Clicked',
           type: 'spline',
           data: percentAppearedList,
           tooltip: {
