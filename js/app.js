@@ -14,11 +14,14 @@ function imageData(imageName,imagePath) {
   this.timesClicked = 0;
   this.timesAppeared = 0;
   this.percentage = 0;
-  this.percentageCalc = function percentageCalc() {
-    this.percentage = parseFloat(((this.timesClicked/this.timesAppeared) * 100).toFixed(1));
-  };
+  // this.percentageCalc = function percentageCalc() {
+  //   this.percentage = parseFloat(((this.timesClicked/this.timesAppeared) * 100).toFixed(1));
+  // };
   allImages.push(this);
 }
+imageData.prototype.percentageCalc = function percentageCalc() {
+  this.percentage = parseFloat(((this.timesClicked/this.timesAppeared) * 100).toFixed(1));
+};
 for (var i = 0; i < imageNameData.imagePaths.length; i += 1) {
   new imageData(imageNameData.imageNames[i],imageNameData.imagePaths[i]);
 }
