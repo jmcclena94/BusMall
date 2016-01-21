@@ -1,11 +1,13 @@
 'use strict';
+/* jshint -W040 */
+/* jshint -W097 */
+/* jshint -W117 */
 var totalClicks = 0;
 var imageNameData = {
   imagePaths: ['bag.jpg', 'banana.jpg', 'boots.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'pen.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'unicorn.jpg', 'usb.gif', 'water_can.jpg', 'wine_glass.jpg'],
   imageNames: ['Bag', 'Banana', 'Boots', 'Chair', 'Cthulhu', 'Dragon', 'Pen', 'Scissors', 'Shark', 'Sweep', 'Unicorn', 'Usb', 'Water Can', 'Wine Glass']
 };
 var allImages = [];
-var allDisplays = [];
 function imageData(imageName,imagePath) {
   this.imagePath = 'img/' + imagePath;
   this.imageName = imageName;
