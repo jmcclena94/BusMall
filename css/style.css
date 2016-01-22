@@ -36,6 +36,11 @@ header {
   justify-content: space-around;
 }
 
+.clearLSButton {
+  display: flex;
+  justify-content: space-around;
+}
+
 .dataContainer {
   display: flex;
   justify-content: space-around;
@@ -48,4 +53,8 @@ header {
 .chartFlexBox {
   height: 60vh;
   width: auto;
+}
+
+.dataContainer {
+  display: flex;
 }

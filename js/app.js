@@ -2,17 +2,16 @@
 /* jshint -W040 */
 /* jshint -W097 */
 /* jshint -W117 */
-
-var chartData = localStorage.getItem('chartPersist');
-
-if(chartData) {
+var clickData = localStorage.getItem('clickData');
+if(clickData) {
   totalClicks = parseInt(localStorage.getItem('clickData'));
-  console.log(totalClicks);
+  if (totalClicks >= 15) {
+    document.getElementById('resultsButton').type = 'submit';
+  }
 } else {
   var totalClicks = 0;
   console.log(totalClicks);
 }
-
 var imageNameData = {
   imagePaths: ['bag.jpg', 'banana.jpg', 'boots.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'pen.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'unicorn.jpg', 'usb.gif', 'water_can.jpg', 'wine_glass.jpg'],
   imageNames: ['Bag', 'Banana', 'Boots', 'Chair', 'Cthulhu', 'Dragon', 'Pen', 'Scissors', 'Shark', 'Sweep', 'Unicorn', 'Usb', 'Water Can', 'Wine Glass']
@@ -24,19 +23,11 @@ function imageData(imageName,imagePath) {
   this.timesClicked = 0;
   this.timesAppeared = 0;
   this.percentage = 0;
-  // this.percentageCalc = function percentageCalc() {
-  //   this.percentage = parseFloat(((this.timesClicked/this.timesAppeared) * 100).toFixed(1));
-  // };
   allImages.push(this);
 }
-
 for (var i = 0; i < imageNameData.imagePaths.length; i += 1) {
   new imageData(imageNameData.imageNames[i],imageNameData.imagePaths[i]);
 }
-// if (chartData) {
-//
-// }
-
 var clearLS = document.getElementById('clearLSButton');
 
 var handleLSClear = function() {
@@ -73,6 +64,9 @@ var displayImage = {
     allImages[index2].timesAppeared += 1;
     allImages[index3].timesAppeared += 1;
     totalClicks += 1;
+    if (totalClicks === 15) {
+      document.getElementById('resultsButton').type = 'submit';
+    }
     localStorage.setItem('chartPersist', JSON.stringify(allImages));
     localStorage.setItem('clickData', totalClicks);
     displayImage.randomImageIndex = [];
@@ -94,128 +88,117 @@ document.getElementById('chartButton').addEventListener('click',function() {
   renderCharts(allImages);
 });
 
-// var chartData = localStorage.getItem('chartPersist');
-// if (chartData) {
-//   allImages = JSON.parse(chartData);
-//   totalClicks = parseInt(localStorage.getItem('clickData'));
-// } else {
-// }
-
 function renderCharts (allImages) {
   event.preventDefault();
-  if (totalClicks < 15) {
-    alert('You have only made ' + totalClicks + '.  Please make at least 15 selections');
-  } else {
-    document.getElementById('resultsButton').value = 'Update Results';
-    for (var i = 0; i < allImages.length; i += 1) {
-      allImages[i].percentage = parseFloat(((allImages[i].timesClicked/allImages[i].timesAppeared) * 100).toFixed(1));
-    }
-    var allImagesSorted = _.sortBy(allImages,'percentage');
-    var namesList = _.pluck(allImagesSorted,'imageName');
-    var timesClickedList = _.pluck(allImagesSorted,'timesClicked');
-    var timesAppearedList = _.pluck(allImagesSorted,'timesAppeared');
-    var percentAppearedList = _.pluck(allImagesSorted,'percentage');
+  document.getElementById('resultsButton').value = 'Update Results';
+  for (var i = 0; i < allImages.length; i += 1) {
+    allImages[i].percentage = parseFloat(((allImages[i].timesClicked/allImages[i].timesAppeared) * 100).toFixed(1));
+  }
+  var allImagesSorted = _.sortBy(allImages,'percentage');
+  var namesList = _.pluck(allImagesSorted,'imageName');
+  var timesClickedList = _.pluck(allImagesSorted,'timesClicked');
+  var timesAppearedList = _.pluck(allImagesSorted,'timesAppeared');
+  var percentAppearedList = _.pluck(allImagesSorted,'percentage');
 
-    $(function () {
-      $('#dataContainer').highcharts({
-        chart: {
-          zoomType: 'xy'
+  $(function () {
+    $('#dataContainer').highcharts({
+      chart: {
+        zoomType: 'xy'
+      },
+      title: {
+        text: 'Click Data for Each Image'
+      },
+      subtitle: {
+        text: 'Sorted by Percentage Clicked'
+      },
+      xAxis: [{
+        categories: namesList,
+        crosshair: true
+      }],
+      yAxis: [{
+        labels: {
+          format: '{value} %',
+          style: {
+            color: Highcharts.getOptions().colors[2]
+          }
         },
         title: {
-          text: 'Click Data for Each Image'
-        },
-        subtitle: {
-          text: 'Sorted by Percentage Clicked'
-        },
-        xAxis: [{
-          categories: namesList,
-          crosshair: true
-        }],
-        yAxis: [{
-          labels: {
-            format: '{value} %',
-            style: {
-              color: Highcharts.getOptions().colors[2]
-            }
-          },
-          title: {
-            text: 'Percent Clicked',
-            style: {
-              color: Highcharts.getOptions().colors[2]
-            }
-          },
-          opposite: true
-        }, {
-          gridLineWidth: 0,
-          title: {
-            text: 'Clicks/Appearances',
-            style: {
-              color: Highcharts.getOptions().colors[0]
-            }
-          },
-          labels: {
-            format: '{value} Times',
-            style: {
-              color: Highcharts.getOptions().colors[0]
-            }
+          text: 'Percent Clicked',
+          style: {
+            color: Highcharts.getOptions().colors[2]
           }
-        }, {
-          gridLineWidth: 0,
-          title: {
-            text: ' ',
-            style: {
-              color: Highcharts.getOptions().colors[1]
-            }
-          },
-          labels: {
-            format: '{value} Times',
-            style: {
-              color: Highcharts.getOptions().colors[1]
-            }
-          },
-          opposite: true
-        }],
+        },
+        opposite: true
+      }, {
+        gridLineWidth: 0,
+        title: {
+          text: 'Clicks/Appearances',
+          style: {
+            color: Highcharts.getOptions().colors[0]
+          }
+        },
+        labels: {
+          format: '{value} Times',
+          style: {
+            color: Highcharts.getOptions().colors[0]
+          }
+        }
+      }, {
+        gridLineWidth: 0,
+        title: {
+          text: ' ',
+          style: {
+            color: Highcharts.getOptions().colors[1]
+          }
+        },
+        labels: {
+          format: '{value} Times',
+          style: {
+            color: Highcharts.getOptions().colors[1]
+          }
+        },
+        opposite: true
+      }],
+      tooltip: {
+        shared: true
+      },
+      legend: {
+        layout: 'vertical',
+        align: 'left',
+        x: 80,
+        verticalAlign: 'top',
+        y: 55,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+      },
+      series: [{
+        name:'Times Clicked',
+        type: 'column',
+        yAxis: 1,
+        data: timesClickedList,
         tooltip: {
-          shared: true
+          valueSuffix: ' Clicks'
+        }
+      }, {
+        name: 'Times Appeared',
+        type: 'spline',
+        yAxis: 1,
+        data: timesAppearedList,
+        marker: {
+          enabled: false
         },
-        legend: {
-          layout: 'vertical',
-          align: 'left',
-          x: 80,
-          verticalAlign: 'top',
-          y: 55,
-          floating: true,
-          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-        },
-        series: [{
-          name:'Times Clicked',
-          type: 'column',
-          yAxis: 1,
-          data: timesClickedList,
-          tooltip: {
-            valueSuffix: ' Clicks'
-          }
-        }, {
-          name: 'Times Appeared',
-          type: 'spline',
-          yAxis: 1,
-          data: timesAppearedList,
-          marker: {
-            enabled: false
-          },
-          dashStyle: 'shortdot',
-          tooltip: {
-            valueSuffix: ' Appearances'
-          }
-        }, {
-          name: 'Percent Clicked',
-          type: 'spline',
-          data: percentAppearedList,
-          tooltip: {
-            valueSuffix: ' Percent'
-          }
-        }]
-      });
+        dashStyle: 'shortdot',
+        tooltip: {
+          valueSuffix: ' Appearances'
+        }
+      }, {
+        name: 'Percent Clicked',
+        type: 'spline',
+        data: percentAppearedList,
+        tooltip: {
+          valueSuffix: ' Percent'
+        }
+      }]
     });
-  }
+  });
 }
