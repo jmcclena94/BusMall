@@ -45,7 +45,7 @@ var handleLSClear = function() {
   localStorage.clear();
 };
 
-clearLS.addEventListener('submit', handleLSClear)
+clearLS.addEventListener('submit', handleLSClear);
 
 var displayImage = {
   randomImageIndex: [],
