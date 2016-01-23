@@ -10,7 +10,6 @@ if(clickData) {
   }
 } else {
   var totalClicks = 0;
-  console.log(totalClicks);
 }
 var imageNameData = {
   imagePaths: ['bag.jpg', 'banana.jpg', 'boots.jpg', 'chair.jpg', 'cthulhu.jpg', 'dragon.jpg', 'pen.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'unicorn.jpg', 'usb.gif', 'water_can.jpg', 'wine_glass.jpg'],
